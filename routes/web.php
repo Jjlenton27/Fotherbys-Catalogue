@@ -4,9 +4,18 @@ use Illuminate\Support\Facades\Route;
 
 //home as index page
 Route::get('/', function () {
-    return view('home');
+    return view('pages.home');
 });
 
-Route::get('/Lot', function () {
-    return view('lot');
+Route::get('/lot', function () {
+    return view('pages.lot');
+});
+
+Route::get('/auctions', function () {
+    return view('pages.auctions');
+});
+
+
+Route::get('/catalouge', function () {
+    return view('pages.catalouge');
 });

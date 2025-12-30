@@ -1,8 +1,12 @@
 @extends('layouts.layout')
 @section('title', "Auctions")
 @section('content')
-    <h2>Auctions</h2>
-    <p>Upcoming and current auctions.</p>
+
+
+    <div>
+        <h2>Auctions</h2>
+        <p>Upcoming and current auctions.</p>
+    </div>
 
     <div class="cardContainer">
         <?php

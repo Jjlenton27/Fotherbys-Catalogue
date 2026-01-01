@@ -16,6 +16,7 @@
                 <img src="images/placeholder.png" alt="" class="cardImg">
                 <h3>Card</h3>
                 <p>Auciton description</p>
+                <p>Date, Time</p>
                 <a href="/catalouge">View Catalouge</a>
             </div>
         <?php

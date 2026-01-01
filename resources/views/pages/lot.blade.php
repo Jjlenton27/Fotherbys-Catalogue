@@ -8,7 +8,7 @@
         </div>
         <div class="lotImg">
             {{-- change img to carousel --}}
-            <img src="images/placeholder.png" alt="" style="margin: 3em;"> 
+            <img src="images/placeholder.png" alt=""> 
         </div>
         <div class="lotPrice">
             <h3>Estimated Value:</h3>

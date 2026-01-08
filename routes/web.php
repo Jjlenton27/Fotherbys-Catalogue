@@ -7,6 +7,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Test;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Account;
 
@@ -38,4 +39,8 @@ Route::post('/register', [Account::class, 'register']);
 
 Route::get('/admin', [AdminController::class, 'index']);
 Route::get('/admin/auction/{id}', [AdminController::class, 'auction']);
-Route::get('/admin/lot/{id}', [AdminController::class, 'lot']);
+
+// php artisan route:list
+// php artisan route:clear for 405 errors
+Route::post('/admin/lot/update/{id}', [AdminController::class, 'updateLot']);
+Route::get('/admin/lot/{id}/{updated?}', [AdminController::class, 'lot']);

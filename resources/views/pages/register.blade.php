@@ -53,7 +53,7 @@
             placeholder="••••••••"
             required>
 
-        @error('name')
+        {{-- @error('name')
             <span>{{ $message }}</span>
         @enderror
 
@@ -63,7 +63,7 @@
 
         @error('password')
             <span>{{ $message }}</span>
-        @enderror
+        @enderror --}}
 
         @error('error')
                 <span">{{ $message }}</span>

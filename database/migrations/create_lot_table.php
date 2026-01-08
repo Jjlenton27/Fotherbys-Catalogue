@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('img'); // REPLACE
 
             $table->foreignId('auction_id')->nullable()->constrained();
-            $table->foreignId('account_id')->constrained();
+            $table->foreignId('user_id')->constrained();
 
             $table->timestamps();
         });
@@ -40,7 +40,37 @@ return new class extends Migration
 
             'img' => "GOTHIC ARMOUR",
             'auction_id' => 1,
-            'account_id' => 1,
+            'user_id' => 1,
+        ]);
+
+        DB::table('lots')->insert([
+            'title' => "The Iron Lily Harness — A Late Gothic Armour Suite",
+            'sub_title' => "South German Gothic Plate Armour, c. 1480–1490",
+            'price' => 2890000,
+            'description' => "<p>This imposing and finely preserved suit of late 15th-century Gothic armour reflects the mature phase of Gothic plate development in the German-speaking regions of the Holy Roman Empire. Produced during a period of rapid innovation in armour design, the Iron Lily Harness embodies both martial efficiency and refined aesthetic sensibility.</p>
+            <p>Fashioned from expertly forged steel plates, the armour displays pronounced vertical fluting across the cuirass, pauldrons, vambraces, cuisses, and greaves. These flutes enhance structural rigidity while contributing to the sharply articulated silhouette that defines late Gothic armour.</p>
+            <p>The breastplate is narrow-waisted with a high medial ridge, complemented by a well-balanced fauld and tassets that allow for flexibility in mounted or foot combat. Long, pointed sabatons and fully enclosed leg defences further emphasize the aristocratic proportions popular among elite warriors of the period.</p>
+            <p>Delicate etched borders and subtle linear ornamentation accent select edges, suggesting a bespoke commission rather than mass production. The sallet helmet, paired with a fitted bevor, features precise cutouts and smooth articulation, indicative of a master armourer’s hand.</p>
+            <p>Surface wear, light oxidation, and a consistent patina attest to the armour’s age and historical use, while its overall completeness remains exceptional. As both a defensive instrument and a status symbol, this harness offers a compelling glimpse into the chivalric culture of late medieval Europe.</p>",
+            'summary' => "Late 15th-century South German Gothic plate armour featuring bold fluting and refined proportions. A highly complete and visually striking example of elite Gothic martial craftsmanship.",
+            'img' => "GOTHIC ARMOUR",
+            'auction_id' => 1,
+            'user_id' => 1,
+        ]);
+
+        DB::table('lots')->insert([
+            'title' => "The Silver Stag Harness — A High Gothic Knightly Armour",
+            'sub_title' => "German Gothic Plate Armour, c. 1465–1475",
+            'price' => 3425000,
+            'description' => "<p>This rare and museum-quality suit of mid-to-late 15th-century Gothic armour represents a pivotal moment in European armour design, when functional protection was seamlessly unified with sculptural elegance. Likely originating from a prominent German armour-making centre, the Silver Stag Harness reflects the tastes of the noble warrior class.</p>
+            <p>The armour is constructed from carefully shaped steel plates, joined by riveted articulations that allow a remarkable range of movement. Distinctive fluting runs vertically along the breastplate, arms, and legs, reinforcing the metal while creating the dramatic visual rhythm emblematic of Gothic style.</p>
+            <p>The cuirass features a pronounced central ridge and a tapered waist, enhancing both deflection and visual stature. Broad pauldrons and fully articulated arm defences balance the form, while the leg harness culminates in elongated sabatons that echo contemporary courtly fashion.</p>
+            <p>Subtle engraved detailing, including a stag motif on the breastplate and couters, suggests heraldic significance or personal symbolism. The helmet, a finely executed sallet with visor, demonstrates precise engineering and careful attention to balance and visibility.</p>
+            <p>Age-appropriate wear and a rich, even patina confirm the armour’s authenticity, yet it remains notably intact for its age. This harness stands as a powerful testament to the artistry, technology, and social prestige embodied in Gothic plate armour.</p>",
+            'summary' => "Mid-to-late 15th-century German Gothic armour distinguished by elegant fluting and engraved heraldic motifs. An exceptional and well-preserved example of noble Gothic plate armour.",
+            'img' => "GOTHIC ARMOUR",
+            'auction_id' => 1,
+            'user_id' => 1,
         ]);
     }
 

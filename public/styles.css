@@ -30,8 +30,8 @@ header{
 nav{
     background-color: rgba(34, 34, 34, 0.1);
     grid-area: nav;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     width: 100%;
 
     text-align: center;
@@ -113,6 +113,10 @@ footer{
     /* object-fit: contain; */
 }
 
+.cardLink{
+    /* margin-top: auto; DIDNT WORK */
+}
+
 .lotPage{
     width: 100%;
     display: grid;
@@ -144,4 +148,12 @@ footer{
 
 .lotDesc{
     grid-area: description;
+}
+
+.adminNav{
+    /* needs padding */
+}
+
+.baseNav{
+
 }

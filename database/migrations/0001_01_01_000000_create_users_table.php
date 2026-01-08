@@ -13,10 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('access_level'); // 1 customer, 2 admin, 3 finance?
+            $table->string('first_name');
+            $table->string('surname');
+            $table->string('address');
+            $table->string('town');
+            $table->string('postcode', 7); //longest postcode is 7 characters long (no space)
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('customer_notes')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +41,28 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        DB::table('users')->insert([
+            'access_level' => 1,
+            'first_name' => "Jack",
+            'surname' => "Lenton",
+            'address' => "123 Medival Street",
+            'town' => "Fantasyham",
+            'postcode' => "FA15JJ",
+            'email' => 'whatisthiswitchcraft@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        DB::table('users')->insert([
+            'access_level' => 2,
+            'first_name' => "Admin",
+            'surname' => "Adminson",
+            'address' => "456 Admin Street",
+            'town' => "Workton",
+            'postcode' => "AD13NM",
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
     }
 
     /**

@@ -6,21 +6,36 @@
 // php artisan migrate:fresh (drop and rebuild entire DB)
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\Account;
 
 Route::get('/', [CustomerController::class, 'index']);
 
-Route::get('/lot', [CustomerController::class, 'lot']);
+Route::get('/lot/{id}', [CustomerController::class, 'lot']);
 
 Route::get('/auctions', [CustomerController::class, 'auctions']);
 
-Route::get('/catalouge', [CustomerController::class, 'catalouge']);
+ Route::get('/catalouge', [CustomerController::class, 'redirectToAuction']); //if no catalouge id redirct to auctions
+Route::get('/lot', [CustomerController::class, 'redirectToAuction']); //if no lot id redirct to auctions
+
+
+Route::get('/catalouge/{id}', [CustomerController::class, 'catalouge']);
 
 Route::get('/sell', [CustomerController::class, 'sell']);
 
 Route::get('/account', [CustomerController::class, 'account']);
 
+Route::view('/login', "pages.login"); //displays login ui
+Route::post('/login', [Account::class, 'login']); //on //login post request use account controller and login function
+Route::post('/logout', [Account::class, 'logout']);
 
-Route::get('/admin', function () {
-    return view('pages.admin.home');
-});
+Route::view('/register', "pages.register");
+//Route::get('/register', [CustomerController::class, 'register']);
+Route::post('/register', [Account::class, 'register']);
+
+
+
+Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/auction/{id}', [AdminController::class, 'auction']);
+Route::get('/admin/lot/{id}', [AdminController::class, 'lot']);

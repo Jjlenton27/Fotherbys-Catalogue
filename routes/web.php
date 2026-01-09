@@ -42,5 +42,11 @@ Route::get('/admin/auction/{id}', [AdminController::class, 'auction']);
 
 // php artisan route:list
 // php artisan route:clear for 405 errors
-Route::post('/admin/lot/update/{id}', [AdminController::class, 'updateLot']);
+Route::view('/admin/lot/create', 'pages.admin.createlot');
+Route::post('/admin/lot/create', [AdminController::class, 'createLot']);
+
 Route::get('/admin/lot/{id}/{updated?}', [AdminController::class, 'lot']);
+Route::post('/admin/lot/delete/{id}', [AdminController::class, 'deleteLot']);
+Route::post('/admin/lot/update/{id}', [AdminController::class, 'updateLot']);
+
+

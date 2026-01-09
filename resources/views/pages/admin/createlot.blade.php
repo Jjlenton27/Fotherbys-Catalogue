@@ -1,8 +1,9 @@
 @extends('layouts.layout')
-@section('title', "Manage Auction")
+@section('title', "Create Lot")
 @section('content')
 
-    <form method="POST" action="/register">
+    <form method="POST" action="/admin/lot/create">
+        @csrf
         <label>Title</label>
         <textarea name="title" required autofocus>
         </textarea>
@@ -30,9 +31,16 @@
             name="seller"
             required>
 
-        @error('error')
-                <span">{{ $message }}</span>
-        @enderror
+        @if ($errors->any())
+            {{-- Display validation errors --}}
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <button type="submit" class="btn btn-primary btn-sm w-full">
             Create

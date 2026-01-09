@@ -36,7 +36,15 @@ class CustomerController extends Controller{
    }
 
     public function catalouge(string $id){
-        $lots = Lot::where('auction_id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
+        //$lots = null;
+        if($id == -1){
+            $lots = Lot::all();
+        }
+
+        else{
+            $lots = Lot::where('auction_id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
+        }
+
         return view('pages.catalouge', ['lots' => $lots]);
     }
 

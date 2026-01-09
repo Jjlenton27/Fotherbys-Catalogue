@@ -3,7 +3,7 @@
 @section('content')
 
 <p>page for managing auctions, allow adding removing lots chanigng title details etc</p>
-    <form method="POST" action="/admin/lot/update/1">
+    <form method="POST" action="/admin/lot/update/{{ $lot->id }}">
         @csrf
         <input type="hidden" name="id" value={{ $lot->id }} required hidden>
 
@@ -58,24 +58,27 @@
         </button>
 
         @if ($errors->any())
-
-        {{-- Display validation errors --}}
-        <div>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+            {{-- Display validation errors --}}
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         @if($updated != null)
             <p>Updated</p>
         @endif
-@endif
 
         {{-- REPLACE WITH DELETE --}}
         {{-- <button type="submit">
             Remove
         </button> --}}
+    </form>
+    <form method="POST" action="/admin/lot/delete/{{ $lot->id }}">
+        @csrf
+        <button type="submit" onclick="return confirm('Are you sure?')"> Delete </button>
     </form>
 @endsection

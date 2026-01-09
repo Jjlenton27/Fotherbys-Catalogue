@@ -35,6 +35,32 @@ class AdminController extends Controller{
         }
     }
 
+    public function createlot(Request $request){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'string|max:255',
+            'summary' => 'required|string',
+            'description' => 'required|string',
+            'seller' => 'required|string|email|max:255',
+            'price' => 'required', //needs data type restrcition
+        ]);
+
+        var_dump(User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id);
+        $validated['seller_id'] = User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id;
+        Lot::create([
+            'title' => $validated['title'],
+            'sub_title' => $validated['subtitle'],
+            'price' => $validated['price'],
+            'description' => $validated['description'], //needs p tag parsing
+            'summary' => $validated['summary'],
+
+            'img' => "GOTHIC ARMOUR", //uuuuuuhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+            'user_id' =>  $validated['seller_id'],
+        ]);
+
+        return redirect('/auctions');
+    }
+
     public function updatelot(Request $request){
         Log::info("lot request");
 
@@ -52,8 +78,6 @@ class AdminController extends Controller{
         // https://laravel.com/docs/12.x/validation#validation-error-response-format
 
         Log::info("lot validated");
-        Log::info($validated['seller']);
-        Log::info(User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id);
 
         // https://laravel.com/docs/12.x/eloquent#updates
 
@@ -72,6 +96,11 @@ class AdminController extends Controller{
         //return redirect('/');
 
         return redirect('/admin/lot/'.$validated['id'].'/true');
+    }
+
+    public function deletelot($id, Request $request){
+        Lot::find($id)->delete();
+        return redirect('/auctions');
     }
 
     public function auction(string $id){

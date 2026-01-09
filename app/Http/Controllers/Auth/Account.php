@@ -86,6 +86,7 @@ class Account extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+
         // Auto login some how
         Auth::login($user);
         session(['access_level' => $user->access_level]); // set user id to allow user to access account features

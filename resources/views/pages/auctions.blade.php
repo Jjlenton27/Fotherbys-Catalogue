@@ -8,6 +8,18 @@
     </div>
 
     <div class="cardContainer">
+
+        @if (session('access_level') == 2)
+         <div class="card">
+                <img src="/images/placeholder.png" alt="" class="cardImg">
+                <h3>All Lots</h3>
+                <p> All lots in the database </p>
+                {{-- <p>{{$auction->auction_date}}, {{$auction->auction_time}}</p> --}}
+                <a href="/catalouge/-1">View Lots</a>
+            </div>
+
+        @endif
+
         @foreach ($auctions as $auction)
             <div class="card">
                 <img src="/images/placeholder.png" alt="" class="cardImg">

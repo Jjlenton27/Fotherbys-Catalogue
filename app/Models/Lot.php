@@ -15,7 +15,7 @@ class Lot extends Model
         'summary',
         'img',
         'auction_id',
-        'seller_id',
+        'user_id',
     ];
 
     public function auction(): BelongsTo

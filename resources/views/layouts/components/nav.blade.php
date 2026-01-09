@@ -10,6 +10,7 @@
 @if (session('access_level') == 2)
     <div class="adminNav">
         <a href="/admin/">Admin Home</a>
+        <a href="/admin/lot/create">Create Lot</a>
         <a href="/admin/account">Admin Account</a>
     </div>
 @endif

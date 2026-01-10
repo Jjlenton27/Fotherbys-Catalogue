@@ -11,6 +11,10 @@ body{
     ;
 }
 
+p{
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
 div{
     border-bottom: 1px solid rgba(34, 34, 34, 0.1);
     margin: auto;

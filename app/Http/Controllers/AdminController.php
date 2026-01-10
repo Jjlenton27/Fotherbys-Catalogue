@@ -45,7 +45,7 @@ class AdminController extends Controller{
             'price' => 'required', //needs data type restrcition
         ]);
 
-        var_dump(User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id);
+        //var_dump(User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id);
         $validated['seller_id'] = User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id;
         Lot::create([
             'title' => $validated['title'],
@@ -64,6 +64,8 @@ class AdminController extends Controller{
     public function updatelot(Request $request){
         Log::info("lot request");
 
+        //https://stackoverflow.com/questions/54026615/how-to-upload-an-image-using-laravel
+
         $validated = $request->validate([
             'id' => 'required', //needs data type restrcition
             'title' => 'required|string|max:255',
@@ -73,13 +75,16 @@ class AdminController extends Controller{
             'seller' => 'required|string|email|max:255',
             'auction' => 'required', //needs data type restrcition
             'price' => 'required', //needs data type restrcition
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120', //???
         ]);
 
         // https://laravel.com/docs/12.x/validation#validation-error-response-format
 
-        Log::info("lot validated");
-
         // https://laravel.com/docs/12.x/eloquent#updates
+
+        //moves  image into public/images
+        $imageName = 'lotImg'.$validated['id'].'.'.request()->image->getClientOriginalExtension();
+        request()->image->move(public_path('images'), $imageName);
 
         $lot = Lot::find($validated['id']);
         $lot->title = $validated['title'];
@@ -89,16 +94,14 @@ class AdminController extends Controller{
         $lot->user_id = User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id;
         $lot->auction_id = $validated['auction'];
         $lot->price = $validated['price'];
+        $lot->img = $imageName;
 
         $lot->save();
-
-        Log::info("lot saved");
-        //return redirect('/');
 
         return redirect('/admin/lot/'.$validated['id'].'/true');
     }
 
-    public function deletelot($id, Request $request){
+    public function deletelot(string $id, Request $request){
         Lot::find($id)->delete();
         return redirect('/auctions');
     }
@@ -107,8 +110,63 @@ class AdminController extends Controller{
         if(session("user_id") == -1 || session("access_level") != 2)
             return redirect('/login');
         else{
-            $auctions = Auction::where('id', '=', $id)->select(['title', 'summary', 'description', 'auction_date', 'auction_time'])->get();
-            return view('pages.admin.auction', ['auction' => $auctions]);
+            $auction = Auction::where('id', '=', $id)->select(['id', 'title', 'summary', 'description', 'auction_date', 'auction_time'])->get()[0];
+            return view('pages.admin.auction', ['auction' => $auction]);
         }
+    }
+
+    public function createauction(Request $request){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'summary' => 'required|string',
+            'description' => 'required|string',
+            'date' => 'required',
+            'time' => 'required', //needs data type restrcition
+        ]);
+
+        Auction::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'], //needs p tag parsing
+            'summary' => $validated['summary'],
+            'auction_date' => $validated['date'],
+            'auction_time' => $validated['time'],
+        ]);
+
+        return redirect('/auctions');
+    }
+
+   public function updateauction(string $id, Request $request){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'summary' => 'required|string',
+            'description' => 'required|string',
+            'date' => 'required',
+            'time' => 'required', //needs data type restrcition
+        ]);
+
+        // https://laravel.com/docs/12.x/validation#validation-error-response-format
+
+        Log::info("auction validated");
+
+        // https://laravel.com/docs/12.x/eloquent#updates
+
+        $auction = Auction::find($id);
+        $auction->title = $validated['title'];
+        $auction->summary = $validated['summary'];
+        $auction->description = $validated['description']; //NEED PROCESSING
+        $auction->auction_date = $validated['date'];
+        $auction->auction_time = $validated['time'];
+
+        $auction->save();
+
+        Log::info(message: "auction saved");
+        //return redirect('/');
+
+        return redirect('/admin/auction/'.$id.'/true');
+    }
+
+    public function deleteauction(string $id, Request $request){
+        Auction::find($id)->delete();
+        return redirect('/auctions');
     }
 }

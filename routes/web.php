@@ -38,7 +38,13 @@ Route::post('/register', [Account::class, 'register']);
 
 
 Route::get('/admin', [AdminController::class, 'index']);
-Route::get('/admin/auction/{id}', [AdminController::class, 'auction']);
+
+Route::view('/admin/auction/create', 'pages.admin.createauction');
+Route::post('/admin/auction/create', [AdminController::class, 'createauction']);
+
+Route::get('/admin/auction/{id}/{updated?}', [AdminController::class, 'auction']);
+Route::post('/admin/auction/update/{id}', [AdminController::class, 'updateauction']);
+Route::post('/admin/auction/delete/{id}', [AdminController::class, 'deleteauction']);
 
 // php artisan route:list
 // php artisan route:clear for 405 errors
@@ -46,7 +52,7 @@ Route::view('/admin/lot/create', 'pages.admin.createlot');
 Route::post('/admin/lot/create', [AdminController::class, 'createLot']);
 
 Route::get('/admin/lot/{id}/{updated?}', [AdminController::class, 'lot']);
-Route::post('/admin/lot/delete/{id}', [AdminController::class, 'deleteLot']);
-Route::post('/admin/lot/update/{id}', [AdminController::class, 'updateLot']);
+Route::post('/admin/lot/update/{id}', [AdminController::class, 'updatelot']);
+Route::post('/admin/lot/delete/{id}', [AdminController::class, 'deletelot']);
 
 

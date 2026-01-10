@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auction;
 use App\Models\Lot;
+use App\Models\SellRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -45,11 +46,36 @@ class CustomerController extends Controller{
             $lots = Lot::where('auction_id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
         }
 
-        return view('pages.catalouge', ['lots' => $lots]);
+        $catalouge = Auction::find($id);
+        return view('pages.catalouge', ['lots' => $lots, 'catalouge' => $catalouge]);
     }
 
     public function sell(){
         return view('pages.sell');
+    }
+
+    public function submitSellRequest(Request $request){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'subtitle' => 'string|max:255',
+            'summary' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required', //needs data type restrcition
+            'resprice' => '', //needs data type restrcition
+        ]);
+
+        SellRequest::create([
+            'title' => $validated['title'],
+            'sub_title' => $validated['subtitle'],
+            'price' => $validated['price'],
+            'description' => $validated['description'], //needs p tag parsing
+            'summary' => $validated['summary'],
+            'reserve_price' => $validated['resprice'],
+
+            'user_id' =>  session('user_id'),
+        ]);
+
+        return redirect('/sell');
     }
 
     public function account(){
@@ -58,8 +84,10 @@ class CustomerController extends Controller{
             return redirect('/login');
         }
 
-        else
-            return view('pages.account');
+        else{
+            $notification_setting = User::find(session('user_id'))->notification_preference;
+            return view('pages.account', ['notification_setting' => $notification_setting]);
+        }
     }
 
     public function register(){

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 
 class Account extends Controller
@@ -84,6 +84,7 @@ class Account extends Controller
             'postcode' => $validated['postcode'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'notification_preferences' => 0,
         ]);
 
 
@@ -94,5 +95,25 @@ class Account extends Controller
 
         // Redirect to home
         return redirect('/account')->with('success', '1');
+    }
+
+    public function UpdateNotificationPreferences(Request $request){
+        $validated = $request->validate([
+            'emailPref' => '',
+            'phonePref' => '',
+        ]);
+
+        if(isset($validated['emailPref']) && isset($validated['phonePref']))
+            $notifSetting = 0;
+        else if(isset($validated['emailPref']) && !isset($validated['phonePref']))
+            $notifSetting = 1;
+        else if(!isset($validated['emailPref']) && isset($validated['phonePref']))
+            $notifSetting = 2;
+
+        $user = User::find(session('user_id'));
+        $user->notification_preference = $notifSetting;
+        $user->save();
+
+        return redirect('/account');
     }
 }

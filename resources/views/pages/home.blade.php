@@ -2,12 +2,19 @@
 @section('title', "Home")
 
 @section('content')
-    <h2>Welcome to the Home Page</h2>
-    <p>This content is unique to the home page.</p>
+    <h2>Welcome to Fotherbys</h2>
+    <p>Here to accomdate your auction needs</p>
 
-    https://www.youtube.com/watch?v=cmlkB3oaKOQ
+    <div class="placeholderCarousel">
+        <h1>Selected auctions</h1>
+    </div>
 
-    <p>selected auction carousel</p>
-    <p>coming soon auction</p>
-    <p>trending lots</p>
+    <div class="placeholderCarousel">
+        <h1>Coming soon auctions</h1>
+    </div>
+
+    <div class="placeholderCarousel">
+        <h1>Trending lots</h1>
+    </div>
+
 @endsection

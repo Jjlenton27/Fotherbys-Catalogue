@@ -27,7 +27,8 @@ return new class extends Migration
 
             $table->foreignId('auction_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
-
+            $table->boolean('sold')->default(false);
+            $table->integer('reserve_price')->nullable();
             $table->timestamps();
         });
 

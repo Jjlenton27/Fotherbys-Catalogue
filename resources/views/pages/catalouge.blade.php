@@ -2,9 +2,9 @@
 @section('title', "Catalouge")
 @section('content')
 
-    <div>
-        <h1>PLACEHOLDER CATALOUGE NAME</h1>
-        <p>PLACE HOLDER DESCRIPTION</p>
+    <div class="catalougeHeader">
+        <h1>{{ $catalouge->title }}</h1>
+        <?php echo($catalouge->description); ?>
     </div>
 
     {{-- <div class="itemDisplay"> --}}
@@ -24,7 +24,7 @@
                     <a href="/lot/{{$lot->id}}" class="cardLink">View Lot</a>
 
                     @if (session('access_level') == 2)
-                        <a href="/admin/lot/{{ $lot->id }}">Manage Lot</a>
+                        <a href="/admin/lot/{{ $lot->id }}">| Manage Lot</a>
                     @endif
 
                 </div>

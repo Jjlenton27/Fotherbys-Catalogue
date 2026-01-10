@@ -24,8 +24,11 @@ Route::get('/lot', [CustomerController::class, 'redirectToAuction']); //if no lo
 Route::get('/catalouge/{id}', [CustomerController::class, 'catalouge']);
 
 Route::get('/sell', [CustomerController::class, 'sell']);
+Route::post('/sell/submit', [CustomerController::class, 'submitSellRequest']);
 
 Route::get('/account', [CustomerController::class, 'account']);
+Route::post('/account/updateprefs', [Account::class, 'UpdateNotificationPreferences']);
+
 
 Route::view('/login', "pages.login"); //displays login ui
 Route::post('/login', [Account::class, 'login']); //on //login post request use account controller and login function

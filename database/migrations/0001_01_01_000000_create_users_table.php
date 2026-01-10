@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('customer_notes')->nullable();
+            $table->string('notification_preference'); //0 = all, 1 = email, 2 = phone
             $table->rememberToken();
             $table->timestamps();
         });
@@ -51,6 +52,7 @@ return new class extends Migration
             'postcode' => "FA15JJ",
             'email' => 'whatisthiswitchcraft@gmail.com',
             'password' => Hash::make('password'),
+            'notification_preference' => 0,
         ]);
 
         DB::table('users')->insert([
@@ -62,6 +64,7 @@ return new class extends Migration
             'postcode' => "AD13NM",
             'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
+            'notification_preference' => 0,
         ]);
     }
 

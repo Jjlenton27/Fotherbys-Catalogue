@@ -53,22 +53,6 @@
             placeholder="••••••••"
             required>
 
-        {{-- @error('name')
-            <span>{{ $message }}</span>
-        @enderror
-
-        @error('email')
-            <span>{{ $message }}</span>
-        @enderror
-
-        @error('password')
-            <span>{{ $message }}</span>
-        @enderror --}}
-
-        @error('error')
-                <span">{{ $message }}</span>
-        @enderror
-
         <label>Remember me</label>
         <input type="checkbox"
             name="remember">

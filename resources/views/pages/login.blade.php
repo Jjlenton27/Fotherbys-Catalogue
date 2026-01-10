@@ -6,11 +6,12 @@
 
     {{-- https://laravel.com/learn/getting-started-with-laravel/basic-authentication-loginlogout --}}
 
-    <form method="POST" action="/login">
+    <form method="POST" action="/login" class="login">
         @csrf
         <label>Email</label>
         <input type="email"
             name="email"
+            class = "email"
             placeholder="mail@example.com"
             required
             autofocus>
@@ -21,17 +22,26 @@
             placeholder="•••••••"
             required>
 
-        @error('error')
-                <span">{{ $message }}</span>
-        @enderror
+        <div style=" all:initial; vertical-align: middle; ">
+            <label for = "remember">Remember me</label>
+            <input type="checkbox"
+                name="remember">
+        </div>
 
-        <label>Remember me</label>
-        <input type="checkbox"
-            name="remember">
-
-        <button type="submit" class="btn btn-primary btn-sm w-full">
+        <button type="submit">
             Sign In
         </button>
+
+        @if ($errors->any())
+            {{-- Display validation errors --}}
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     </form>
 
     <a href="/register">Create Account</a>

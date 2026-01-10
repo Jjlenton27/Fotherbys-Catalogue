@@ -2,15 +2,13 @@
 @section('title', "Create Lot")
 @section('content')
 
-    <form method="POST" action="/admin/lot/create">
+    <form method="POST" action="/admin/lot/create" class="createForm">
         @csrf
         <label>Title</label>
-        <textarea name="title" required autofocus>
-        </textarea>
+        <input type="text" name="title" class="wideInput" required autofocus>
 
         <label>Subtitle</label>
-        <textarea name="subtitle" required>
-        </textarea>
+        <input type="text" name="subtitle" class="wideInput">
 
         <label>Summary</label>
         <textarea name="summary" required>
@@ -27,9 +25,7 @@
             required>
 
         <label>Seller</label>
-        <input type="textarea"
-            name="seller"
-            required>
+        <input type="textarea" name="seller" class="wideInput" required>
 
         @if ($errors->any())
             {{-- Display validation errors --}}
@@ -42,7 +38,7 @@
             </div>
         @endif
 
-        <button type="submit" class="btn btn-primary btn-sm w-full">
+        <button type="submit">
             Create
         </button>
     </form>

@@ -25,11 +25,19 @@
                 <img src="/images/placeholder.png" alt="" class="cardImg">
                 <h3>{{$auction->title}}</h3>
                 <p>{{$auction->summary}}</p>
-                <p>{{$auction->auction_date}}, {{$auction->auction_time}}</p>
+
+                <p>
+                    <?php
+                        $date = explode('-', $auction->auction_date);
+                        echo $date[2]."/".$date[1]."/".$date[0];
+                    ?>,
+                    {{$auction->auction_time}}
+                </p>
+
                 <a href="/catalouge/{{ $auction->id }}">View Catalouge</a>
 
                 @if (session('access_level') == 2)
-                    <a href="/admin/auction/{{ $auction->id }}">Manage Auction</a>
+                    <a href="/admin/auction/{{ $auction->id }}">| Manage Auction</a>
                 @endif
 
             </div>

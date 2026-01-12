@@ -18,12 +18,18 @@ Route::get('/lot/{id}', [CustomerController::class, 'lot']);
 
 Route::get('/auctions', [CustomerController::class, 'auctions']);
 
- Route::get('/catalouge', [CustomerController::class, 'redirectToAuction']); //if no catalouge id redirct to auctions
+Route::get('/catalouge', [CustomerController::class, 'redirectToAuction']); //if no catalouge id redirct to auctions
 Route::get('/lot', [CustomerController::class, 'redirectToAuction']); //if no lot id redirct to auctions
 
 
 Route::get('/catalouge/{id}', [CustomerController::class, 'catalouge']);
 Route::post('/catalouge/{id}', [CustomerController::class, 'catalougePOST']);
+
+Route::view('/search', view('pages.search'));
+Route::get('/search', [CustomerController::class, 'search']);
+
+Route::get('/contact', [CustomerController::class, 'contact']);
+Route::post('/contact/submit', [CustomerController::class, 'submitcontact']);
 
 
 Route::get('/sell', [CustomerController::class, 'sell']);
@@ -38,12 +44,14 @@ Route::post('/login', [Account::class, 'login']); //on //login post request use 
 Route::post('/logout', [Account::class, 'logout']);
 
 Route::view('/register', "pages.register");
-//Route::get('/register', [CustomerController::class, 'register']);
 Route::post('/register', [Account::class, 'register']);
 
 
+//ADMIN
 
 Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/markresponded/{id}', [AdminController::class, 'markResponded']);
+
 
 Route::view('/admin/auction/create', 'pages.admin.createauction');
 Route::post('/admin/auction/create', [AdminController::class, 'createauction']);
@@ -60,7 +68,6 @@ Route::post('/admin/lot/create', [AdminController::class, 'createLot']);
 Route::get('/admin/lot/{id}/{updated?}', [AdminController::class, 'lot']);
 Route::post('/admin/lot/update/{id}', [AdminController::class, 'updatelot']);
 Route::post('/admin/lot/delete/{id}', [AdminController::class, 'deletelot']);
-
 
 Route::get('/admin/sellrequest/{id}', [AdminController::class, 'sellRequest']);
 Route::post('/admin/sellrequest/action', [AdminController::class, 'sellRequestAction']);

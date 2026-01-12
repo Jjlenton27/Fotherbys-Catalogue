@@ -2,7 +2,26 @@
 @section('title', "Admin")
 @section('content')
 
-<p>Admin dashboard stuff idk</p>
+<h3>Admin dashboard</h3>
+
+<table class="sellRequestContainer">
+    <thead>
+        <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Message</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($contactRequests as $contactRequest)
+            <tr class="sellRequestLine">
+                <td>{{  $contactRequest->email }}</th>
+                <td>{{  $contactRequest->message }}</th>
+                <td><a href="/admin/markresponded/{{ $contactRequest->id }}">Mark Responded</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 
 <table class="sellRequestContainer">
     <thead>

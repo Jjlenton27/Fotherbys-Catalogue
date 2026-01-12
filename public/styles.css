@@ -288,3 +288,17 @@ textarea{
 td{
     padding:1em
 }
+
+.searchBarForm{
+    width: 30%;
+    margin-left: 5em;
+    margin-right: 5em;
+    padding:  0;
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebyside{
+    display: flex;
+    flex-direction: row;
+}

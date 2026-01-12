@@ -44,6 +44,8 @@
         @endif
     </form>
 
-    <a href="/register">Create Account</a>
+    <div style="text-align:center;">
+        <a  ref="/register">Create Account</a>
+    </div>
 
 @endsection

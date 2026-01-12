@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Auction;
 use App\Models\Lot;
 use App\Models\SellRequest;
-use Carbon\Carbon;
+use App\Models\ContactRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Auth;
@@ -23,12 +22,20 @@ class AdminController extends Controller{
         if(session("user_id") == -1 || session("access_level") != 2)
             return redirect('/login');
         else{
+            $contactRequests = ContactRequest::where('responded', '=', '0')->get();
             $sellRequests = SellRequest::where('status', '=', '0')->get();
             foreach($sellRequests as $sellRequest){
                 $sellRequest->user = User::where('id', '=', $sellRequest->user_id)->select('email')->get()[0];
             }
-            return view('pages.admin.home', ['sellRequests' => $sellRequests]);
+            return view('pages.admin.home', ['sellRequests' => $sellRequests, 'contactRequests' => $contactRequests]);
         }
+    }
+
+    public function markResponded($id){
+        $contactRequest = ContactRequest::find($id);
+        $contactRequest->responded = true;
+        $contactRequest->save();
+        return redirect('/admin');
     }
 
     public function sellRequest(string $id){

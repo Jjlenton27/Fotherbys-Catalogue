@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Auction;
+use App\Models\ContactRequest;
 use App\Models\Lot;
 use App\Models\SellRequest;
 use Carbon\Carbon;
@@ -20,6 +21,29 @@ class CustomerController extends Controller{
 
     public function index(){
         return view('pages.home');
+    }
+
+    public function contact(){
+        return view('pages.contact');
+    }
+
+    public function submitcontact(Request $request){
+         $validated = $request->validate([
+            'email' => 'required|string|max:255|email',
+            'message' => 'required|string',
+        ]);
+
+        ContactRequest::create([
+            'email' => $validated['email'],
+            'message' => $validated['message'],
+        ]);
+        return view('pages.contact', ['submitted' => true]);
+    }
+
+    public function search(Request $request){
+        $search = $request->query('search');
+        $lots = Lot::where('title', 'LIKE', '%'.$search.'%')->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
+        return view('pages.search', ['lots' => $lots]);
     }
 
     public function lot(string $id){

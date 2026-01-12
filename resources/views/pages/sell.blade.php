@@ -5,9 +5,15 @@
     <h3>selling with fotherbys</h3>
     <p>description of selling</p>
 
-    <p>admin and back end need more disccusion with business users</p>
-    <p>would require user to be logged in, </p>
+    <div class="sidebyside">
+        <div style="flex-grow: 1; padding: 1em; width: 40%; margin-top: 0;">
+            <h3>PARAGRAPH TITLE</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis accusamus dolorum facere laborum omnis corrupti voluptates autem aliquam et fugit optio deserunt, illum delectus. Tempore tempora similique corporis modi repellat?</p>
+        </div>
+        <img src="/images/placeholder.png" alt="" style="flex-grow: 1;  padding: 1em;">
+    </div>
 
+    <p>admin and back end need more disccusion with business users</p>
     <h3>Selling Form</h3>
     @if (session('user_id'))
         <form method="POST" action="/sell/submit">

@@ -3,7 +3,7 @@
 @section('content')
 
 <p>page for managing auctions, allow adding removing lots chanigng title details etc</p>
-    <form method="POST" action="/admin/lot/update/{{ $lot->id }}" enctype="multipart/form-data">
+    <form method="POST" action="/admin/lot/update/{{ $lot->id }}" enctype="multipart/form-data" class="adminForm">
         @csrf
         <input type="hidden" name="id" value={{ $lot->id }} required hidden>
 
@@ -11,6 +11,7 @@
         <label>Title</label>
         <input type="text"
             name="title"
+            class="wideInput"
             value="{{ $lot->title }}"
             required
             autofocus>
@@ -18,8 +19,21 @@
         <label>Subtitle</label>
         <input type="text"
             name="subtitle"
+            class="wideInput"
             value="{{ $lot->sub_title }}"
             required>
+
+            {{-- paintings, drawings, photographic images, sculptures and carvings --}}
+
+
+        <label>Category</label>
+        <select name="category">
+            <option value="painting" @if($lot->category == "painting") selected @endif>Painting</option>
+            <option value="drawing" @if($lot->category == "drawing") selected @endif>Drawing</option>
+            <option value="photograph" @if($lot->category == "photograph") selected @endif>Photograph</option>
+            <option value="sculpture" @if($lot->category == "sculpture") selected @endif>Sculpture</option>
+            <option value="carving" @if($lot->category == "carving") selected @endif>Carving</option>
+        </select>
 
         <label>Summary</label>
         <textarea name="summary">
@@ -35,6 +49,8 @@
         <label>Image</label>
         <input type="file" name="image">
 
+
+
         <label>Price</label>
         <input type="text"
             name="price"
@@ -49,11 +65,12 @@
         <label>Seller</label>
         <input type="email"
             name="seller"
+            class="wideInput"
             value="{{ $lot->user->email }}"
             required>
 
         <button type="submit">
-            Create
+            Update
         </button>
 
         @if ($errors->any())

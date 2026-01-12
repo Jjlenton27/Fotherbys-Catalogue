@@ -8,7 +8,11 @@
         </div>
         <div class="lotImg">
             {{-- change img to carousel --}}
-            <img src="/images/placeholder.png" alt="">
+            @if ($lot->img == "placeholder")
+                <img src="/images/placeholder.png" alt="">
+            @else
+                <img src="{{ $lot->img }}" alt="">
+            @endif
         </div>
         <div class="lotPrice">
             <h3>Estimated Value:</h3>

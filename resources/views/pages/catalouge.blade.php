@@ -3,8 +3,13 @@
 @section('content')
 
     <div class="catalougeHeader">
-        <h1>{{ $catalouge->title }}</h1>
-        <?php echo($catalouge->description); ?>
+        @if ($isCatalouge)
+            <h1>{{ $catalouge->title }}</h1>
+            <?php echo($catalouge->description); ?>
+        @else
+            <h1>All lots</h1>
+        @endif
+
     </div>
 
     {{-- <div class="itemDisplay"> --}}

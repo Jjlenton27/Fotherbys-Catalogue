@@ -40,14 +40,33 @@ class CustomerController extends Controller{
         //$lots = null;
         if($id == -1){
             $lots = Lot::all();
+            $isCatalouge = false;
+            $catalouge = null;
         }
 
         else{
             $lots = Lot::where('auction_id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
+            $isCatalouge = true;
+            $catalouge = Auction::find($id);
         }
 
-        $catalouge = Auction::find($id);
-        return view('pages.catalouge', ['lots' => $lots, 'catalouge' => $catalouge]);
+        return view('pages.catalouge', ['lots' => $lots, 'catalouge' => $catalouge, 'isCatalouge' => $isCatalouge]);
+    }
+
+    public function catalougePOST(string $id, Request $request){
+        if($id == -1){
+            $lots = Lot::all();
+            $isCatalouge = false;
+            $catalouge = null;
+        }
+
+        else{
+            $lots = Lot::where('auction_id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'img'])->get();
+            $isCatalouge = true;
+            $catalouge = Auction::find($id);
+        }
+
+        return view('pages.catalouge', ['lots' => $lots, 'catalouge' => $catalouge, 'isCatalouge' => $isCatalouge]);
     }
 
     public function sell(){
@@ -58,7 +77,7 @@ class CustomerController extends Controller{
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'string|max:255',
-            'summary' => 'required|string',
+            'summary' => 'string',
             'description' => 'required|string',
             'price' => 'required', //needs data type restrcition
             'resprice' => '', //needs data type restrcition

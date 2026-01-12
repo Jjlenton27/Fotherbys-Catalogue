@@ -30,6 +30,7 @@ class Account extends Controller
 
 
             // Redirect to intended page or home with message
+            //return back();
             return redirect()->intended('/account')->with('success', '1');
         }
 

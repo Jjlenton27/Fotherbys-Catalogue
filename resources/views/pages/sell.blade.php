@@ -19,7 +19,7 @@
             <input type="text" name="subtitle">
 
             <label>Summary</label>
-            <textarea name="summary" required>
+            <textarea name="summary">
             </textarea>
 
             {{-- PARSE <P> TAGS IN AND OUT BEFORE SHOWING/STORING--}}

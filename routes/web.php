@@ -1,9 +1,10 @@
 <?php
 
-
+// php -d variables_order=GPCS artisan serve run without herd
 // php artisan migrate (run migrations command)
 // php artisan migrate:rollback (undo build DB command)
 // php artisan migrate:fresh (drop and rebuild entire DB)
+// php artisan serve run
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
@@ -22,6 +23,8 @@ Route::get('/lot', [CustomerController::class, 'redirectToAuction']); //if no lo
 
 
 Route::get('/catalouge/{id}', [CustomerController::class, 'catalouge']);
+Route::post('/catalouge/{id}', [CustomerController::class, 'catalougePOST']);
+
 
 Route::get('/sell', [CustomerController::class, 'sell']);
 Route::post('/sell/submit', [CustomerController::class, 'submitSellRequest']);
@@ -57,5 +60,9 @@ Route::post('/admin/lot/create', [AdminController::class, 'createLot']);
 Route::get('/admin/lot/{id}/{updated?}', [AdminController::class, 'lot']);
 Route::post('/admin/lot/update/{id}', [AdminController::class, 'updatelot']);
 Route::post('/admin/lot/delete/{id}', [AdminController::class, 'deletelot']);
+
+
+Route::get('/admin/sellrequest/{id}', [AdminController::class, 'sellRequest']);
+Route::post('/admin/sellrequest/action', [AdminController::class, 'sellRequestAction']);
 
 

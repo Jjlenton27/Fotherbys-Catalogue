@@ -2,7 +2,7 @@
 @section('title', "Create Lot")
 @section('content')
 
-    <form method="POST" action="/admin/lot/create" class="createForm">
+    <form method="POST" action="/admin/lot/create" class="adminForm">
         @csrf
         <label>Title</label>
         <input type="text" name="title" class="wideInput" required autofocus>
@@ -11,7 +11,7 @@
         <input type="text" name="subtitle" class="wideInput">
 
         <label>Summary</label>
-        <textarea name="summary" required>
+        <textarea name="summary">
         </textarea>
 
         {{-- PARSE <P> TAGS IN AND OUT BEFORE SHOWING/STORING--}}

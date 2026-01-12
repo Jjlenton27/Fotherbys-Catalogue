@@ -15,5 +15,6 @@ class SellRequest extends Model
         'description',
         'summary',
         'user_id',
+        'status',
     ];
 }

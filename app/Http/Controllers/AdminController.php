@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Auction;
 use App\Models\Lot;
+use App\Models\SellRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -21,15 +22,65 @@ class AdminController extends Controller{
     public function index(){
         if(session("user_id") == -1 || session("access_level") != 2)
             return redirect('/login');
-        else
-            return view('pages.admin.home');
+        else{
+            $sellRequests = SellRequest::where('status', '=', '0')->get();
+            foreach($sellRequests as $sellRequest){
+                $sellRequest->user = User::where('id', '=', $sellRequest->user_id)->select('email')->get()[0];
+            }
+            return view('pages.admin.home', ['sellRequests' => $sellRequests]);
+        }
+    }
+
+    public function sellRequest(string $id){
+        $sellRequest = SellRequest::where('id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'category', 'description', 'summary'])->get()[0]; // DB request returns arrrary with one element, pass single elemnt thats at index 0
+        $sellRequest->user = User::where('id', '=', $id)->select('email')->get()[0];
+        return view('pages.admin.sellrequest', ['sellRequest' => $sellRequest]);
+    }
+
+    public function sellRequestAction(Request  $request){
+        if($request->verdict == "approve"){
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'subtitle' => 'string|max:255',
+                'summary' => 'Wstring',
+                'description' => 'required|string',
+                'category' => 'required',
+                'seller' => 'required|string|email|max:255',
+                'price' => 'required', //needs data type restrcition
+            ]);
+
+            $validated['seller_id'] = User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id;
+            Lot::create([
+                'title' => $validated['title'],
+                'sub_title' => $validated['subtitle'],
+                'price' => $validated['price'],
+                'category' => $validated['category'],
+                'description' => $validated['description'], //needs p tag parsing
+                'summary' => $validated['summary'],
+                'img' => "GOTHIC ARMOUR", //uuuuuuhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+                'user_id' =>  $validated['seller_id'],
+            ]);
+
+            $sellRequest = SellRequest::find($request->id);
+            $sellRequest->status = 1;
+            $sellRequest->save();
+        }
+
+        else{
+            $sellRequest = SellRequest::find($$request->id);
+            $sellRequest->status = -1;
+            $sellRequest->save();
+        }
+
+
+        return redirect('/admin');
     }
 
     public function lot($id, $updated = null){
         if(session("user_id") == -1 || session("access_level") != 2)
             return redirect('/login');
         else{
-            $lot = Lot::where('id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'description', 'summary', 'user_id', 'img', 'auction_id'])->get()[0]; // DB request returns arrrary with one element, pass single elemnt thats at index 0
+            $lot = Lot::where('id', '=', $id)->select(['id', 'title', 'sub_title', 'price', 'category', 'description', 'summary', 'user_id', 'img', 'auction_id'])->get()[0]; // DB request returns arrrary with one element, pass single elemnt thats at index 0
             $lot->user = User::where('id', '=', $lot->user_id)->select('email')->get()[0];
             return view('pages.admin.lot', ['lot' => $lot, 'updated' => $updated]);
         }
@@ -39,8 +90,9 @@ class AdminController extends Controller{
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'string|max:255',
-            'summary' => 'required|string',
+            'summary' => 'string',
             'description' => 'required|string',
+            'category' => 'required',
             'seller' => 'required|string|email|max:255',
             'price' => 'required', //needs data type restrcition
         ]);
@@ -51,9 +103,9 @@ class AdminController extends Controller{
             'title' => $validated['title'],
             'sub_title' => $validated['subtitle'],
             'price' => $validated['price'],
+            'category' => $validated['category'],
             'description' => $validated['description'], //needs p tag parsing
             'summary' => $validated['summary'],
-
             'img' => "GOTHIC ARMOUR", //uuuuuuhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
             'user_id' =>  $validated['seller_id'],
         ]);
@@ -70,9 +122,10 @@ class AdminController extends Controller{
             'id' => 'required', //needs data type restrcition
             'title' => 'required|string|max:255',
             'subtitle' => 'string|max:255',
-            'summary' => 'required|string',
+            'summary' => 'string',
             'description' => 'required|string',
             'seller' => 'required|string|email|max:255',
+            'category' => 'required',
             'auction' => 'required', //needs data type restrcition
             'price' => 'required', //needs data type restrcition
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120', //???
@@ -83,19 +136,24 @@ class AdminController extends Controller{
         // https://laravel.com/docs/12.x/eloquent#updates
 
         //moves  image into public/images
-        $imageName = 'lotImg'.$validated['id'].'.'.request()->image->getClientOriginalExtension();
-        request()->image->move(public_path('images'), $imageName);
+        if(isset($validated['image'])){
+            $imageName = 'lotImg'.$validated['id'].'.'.request()->$validated['image']->getClientOriginalExtension();
+            request()->$validated['image']->move(public_path('images'), $imageName);
+        }
 
         $lot = Lot::find($validated['id']);
         $lot->title = $validated['title'];
         $lot->sub_title = $validated['subtitle'];
         $lot->summary = $validated['summary'];
+        $lot->category = $validated['category'];
         $lot->description = $validated['description']; //NEED PROCESSING
         $lot->user_id = User::where('email',  '=', $validated['seller'])->select('id')->get()[0]->id;
         $lot->auction_id = $validated['auction'];
         $lot->price = $validated['price'];
-        $lot->img = $imageName;
 
+         if(isset($validated['image'])){
+            $lot->img = $imageName;
+        }
         $lot->save();
 
         return redirect('/admin/lot/'.$validated['id'].'/true');

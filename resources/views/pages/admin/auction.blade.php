@@ -4,11 +4,12 @@
 
 <p>page for managing auctions, allow adding removing lots chanigng title details etc</p>
 
-    <form method="POST" action="/admin/auction/update/{{ $auction->id }}">
+    <form method="POST" action="/admin/auction/update/{{ $auction->id }}" class="adminForm">
         @csrf
         <label>Title</label>
         <input type="text"
             name="title"
+            class="wideInput"
             value="{{ $auction->title }}"
             required
             autofocus>
@@ -16,6 +17,7 @@
         <label>Summary</label>
         <input type="text"
             name="summary"
+            class="wideInput"
             value="{{ $auction->summary }}"
             required>
 
@@ -37,8 +39,8 @@
             value={{ $auction->auction_time }}
             required>
 
-        <button type="submit" class="btn btn-primary btn-sm w-full">
-            Create
+        <button type="submit">
+            Update
         </button>
 
         @if ($errors->any())

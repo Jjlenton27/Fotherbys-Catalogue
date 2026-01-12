@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('title', "Manage Auction")
 @section('content')
-    <form method="POST" action="/admin/auction/create" class="createForm">
+    <form method="POST" action="/admin/auction/create" class="adminForm">
         @csrf
         <label>Title</label>
         <input type="text" name="title" class="wideInput" required autofocus>

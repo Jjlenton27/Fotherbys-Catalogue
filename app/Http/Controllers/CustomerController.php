@@ -114,7 +114,7 @@ class CustomerController extends Controller{
             'description' => $validated['description'], //needs p tag parsing
             'summary' => $validated['summary'],
             'reserve_price' => $validated['resprice'],
-
+            'category' => "paintings",
             'user_id' =>  session('user_id'),
         ]);
 

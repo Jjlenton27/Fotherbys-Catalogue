@@ -49,8 +49,6 @@
         <label>Image</label>
         <input type="file" name="image">
 
-
-
         <label>Price</label>
         <input type="text"
             name="price"

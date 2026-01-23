@@ -10,6 +10,15 @@
         <label>Subtitle</label>
         <input type="text" name="subtitle" class="wideInput">
 
+        <label>Category</label>
+        <select name="category">
+            <option value="painting">Painting</option>
+            <option value="drawing" >Drawing</option>
+            <option value="photograph">Photograph</option>
+            <option value="sculpture">Sculpture</option>
+            <option value="carving">Carving</option>
+        </select>
+
         <label>Summary</label>
         <textarea name="summary">
         </textarea>

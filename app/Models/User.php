@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'customer_notes',
+        'notification_preference',
     ];
 
     /**

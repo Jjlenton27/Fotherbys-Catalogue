@@ -49,7 +49,7 @@ class AdminController extends Controller{
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'subtitle' => 'string|max:255',
-                'summary' => 'Wstring',
+                'summary' => 'string',
                 'description' => 'required|string',
                 'category' => 'required',
                 'seller' => 'required|string|email|max:255',
@@ -74,7 +74,7 @@ class AdminController extends Controller{
         }
 
         else{
-            $sellRequest = SellRequest::find($$request->id);
+            $sellRequest = SellRequest::find($request->id);
             $sellRequest->status = -1;
             $sellRequest->save();
         }

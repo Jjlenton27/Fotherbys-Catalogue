@@ -85,7 +85,7 @@ class Account extends Controller
             'postcode' => $validated['postcode'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'notification_preferences' => 0,
+            'notification_preference' => 0,
         ]);
 
 

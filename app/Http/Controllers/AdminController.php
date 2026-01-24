@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller{
 
-    // https://laravel.com/learn/getting-started-with-laravel/what-is-mvc
-    // https://laravel.com/docs/8.x/views#passing-data-to-views
-
-
     public function index(){
         if(session("user_id") == -1 || session("access_level") != 2)
             return redirect('/login');
@@ -123,8 +119,6 @@ class AdminController extends Controller{
     public function updatelot(Request $request){
         Log::info("lot request");
 
-        //https://stackoverflow.com/questions/54026615/how-to-upload-an-image-using-laravel
-
         $validated = $request->validate([
             'id' => 'required', //needs data type restrcition
             'title' => 'required|string|max:255',
@@ -137,10 +131,6 @@ class AdminController extends Controller{
             'price' => 'required', //needs data type restrcition
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120', //???
         ]);
-
-        // https://laravel.com/docs/12.x/validation#validation-error-response-format
-
-        // https://laravel.com/docs/12.x/eloquent#updates
 
         //moves  image into public/images
         if(isset($validated['image'])){
@@ -209,11 +199,7 @@ class AdminController extends Controller{
             'time' => 'required', //needs data type restrcition
         ]);
 
-        // https://laravel.com/docs/12.x/validation#validation-error-response-format
-
         Log::info("auction validated");
-
-        // https://laravel.com/docs/12.x/eloquent#updates
 
         $auction = Auction::find($id);
         $auction->title = $validated['title'];

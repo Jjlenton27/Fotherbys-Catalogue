@@ -21,5 +21,3 @@
         </footer>
     </body>
 </html>
-
-{{-- https://www.cloudways.com/blog/create-laravel-blade-layout/ --}}

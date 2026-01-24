@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller{
 
-    // https://laravel.com/learn/getting-started-with-laravel/what-is-mvc
-    // https://laravel.com/docs/8.x/views#passing-data-to-views
-
-
     public function index(){
         return view('pages.home');
     }

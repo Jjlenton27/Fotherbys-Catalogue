@@ -4,8 +4,6 @@
 
     <h2>Login</h2>
 
-    {{-- https://laravel.com/learn/getting-started-with-laravel/basic-authentication-loginlogout --}}
-
     <form method="POST" action="/login" class="login">
         @csrf
         <label>Email</label>
